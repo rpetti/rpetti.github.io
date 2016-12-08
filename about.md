@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-Automation fanatic, linux evangelist, avid gamer, and legacy code archaologist.
+Automation fanatic, linux evangelist, avid gamer, and legacy code archaeologist.
 
 ### Contact me
 
