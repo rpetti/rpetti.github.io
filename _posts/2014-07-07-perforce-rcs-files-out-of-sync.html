@@ -1,0 +1,30 @@
+---
+layout: post
+status: publish
+published: true
+title: Perforce RCS files out of sync
+author:
+  display_name: Rob Petti
+  login: rpetti
+  email: rob.petti@gmail.com
+  url: http://www.robpetti.com
+author_login: rpetti
+author_email: rob.petti@gmail.com
+author_url: http://www.robpetti.com
+wordpress_id: 171
+wordpress_url: http://robpetti.com/?p=171
+date: '2014-07-07 14:10:46 -0600'
+date_gmt: '2014-07-07 18:10:46 -0600'
+categories:
+- Uncategorized
+tags:
+- perforce
+- replica out of sync
+- versioned files
+comments: []
+---
+<p>During a server move relatively recently, we decided to go about it by setting up a replica in the new site, then switching it to a master once everything has been replicated over.</p>
+<p>It was a pretty solid plan. Unfortunately, something went wrong and the replica was missing revisions from it's versioned files. This resulted in librarian checkout errors when trying to sync the missing revisions.</p>
+<p>I still had the files from the original server, which contained the missing revisions, but unfortunately work had continued on many of the affected files, so we weren't able to copy them over verbatim. I searched around, but to my surprise there wasn't a utility for recombining revisions for RCS files. Perforce support also didn't have one, again to my surprise.</p>
+<p>I wrote a small utility <a href="https:&#47;&#47;github.com&#47;rpetti&#47;rcs-combiner" target="_blank">here<&#47;a> that recombines versioned files. It uses rcs to do much of the work, so that will need to be installed on whatever system you are using. The rcs-combiner acts on individual files, while the merge-p4-roots.sh script is a simple script that combines two perforce roots together.</p>
+<p>Rather than running it against full p4 roots, I advise pulling out the specific versioned files you need to combine by examining the output of <code>p4 verify -q<&#47;code>, and piping the missing file#revisions into <code>p4 -x- fstat -Oc<&#47;code> to determine it's lbrFile (also known as the versioned&#47;RCS file). As always, YMMV, and I take no responsibility if you try to run this against a live server and end up breaking something.</p>

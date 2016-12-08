@@ -1,0 +1,29 @@
+---
+layout: post
+status: publish
+published: true
+title: Partitioning DASD in Yast Hangs
+author:
+  display_name: Rob Petti
+  login: rpetti
+  email: rob.petti@gmail.com
+  url: http://www.robpetti.com
+author_login: rpetti
+author_email: rob.petti@gmail.com
+author_url: http://www.robpetti.com
+wordpress_id: 35
+wordpress_url: http://robpetti.com/?p=35
+date: '2011-01-12 18:13:36 -0700'
+date_gmt: '2011-01-12 23:13:36 -0700'
+categories:
+- Linux
+tags: []
+comments: []
+---
+<p>I ran into this obsurd issue today. Apparently Suse 11 zLinux doesn't handle partition creation properly on DASD disks. When it gets to actually running the <code>fdasd<&#47;code> command (zLinux version of <code>fdisk<&#47;code>, as near as I can tell) it simply hangs there forever.</p>
+<p>The work around is pretty basic, just exit out of yast, and launch <code>fdasd<&#47;code> manually.</p>
+<pre name="code" class="brush: bash">
+fdasd &#47;dev&#47;dasdc<br />
+<&#47;pre></p>
+<p>The usage is basically identical to fdisk, except partitions are measured in tracks instead of blocks or sectors, and there are only two partition types instead of the multitude offered by regular partition tables.</p>
+<p>After you've done that and written out your changes, you can jump back into yast to finish whatever you needed to do with it (formatting, creating volume groups etc.)</p>

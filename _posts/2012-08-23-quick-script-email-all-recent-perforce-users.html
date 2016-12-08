@@ -1,0 +1,95 @@
+---
+layout: post
+status: publish
+published: true
+title: 'Quick Script: Email all recent Perforce users'
+author:
+  display_name: Rob Petti
+  login: rpetti
+  email: rob.petti@gmail.com
+  url: http://www.robpetti.com
+author_login: rpetti
+author_email: rob.petti@gmail.com
+author_url: http://www.robpetti.com
+excerpt: "Here's a script I whipped up in order to send an email to all recent Perforce
+  users. I needed this because my company uses a shared license, so all user accounts
+  are shared between our perforce servers. When a server needs to go down for maintenance,
+  I like to email only those people who actually use it. This uses python, but it
+  does not require the p4python api (though I imagine it would be quite simpler using
+  it). I'm sure there are some imports that need to be cleaned up, but whatever, it's
+  just a quickie.\r\n"
+wordpress_id: 115
+wordpress_url: http://robpetti.com/?p=115
+date: '2012-08-23 18:29:40 -0600'
+date_gmt: '2012-08-23 22:29:40 -0600'
+categories:
+- Perforce
+tags: []
+comments:
+- id: 606
+  author: chwil&oacute;wki
+  author_email: jarrodkilgore@bigstring.com
+  author_url: http://ahi42hu.wordpress.com
+  date: '2013-06-06 15:02:53 -0600'
+  date_gmt: '2013-06-06 19:02:53 -0600'
+  content: Helpful info. Fortunate me I discovered your web site by chance, and I'm
+    surprised why this coincidence did not happened earlier! I bookmarked it.
+---
+<p>Here's a script I whipped up in order to send an email to all recent Perforce users. I needed this because my company uses a shared license, so all user accounts are shared between our perforce servers. When a server needs to go down for maintenance, I like to email only those people who actually use it. This uses python, but it does not require the p4python api (though I imagine it would be quite simpler using it). I'm sure there are some imports that need to be cleaned up, but whatever, it's just a quickie.<br />
+<a id="more"></a><a id="more-115"></a></p>
+<pre name="code" class="brush: python">
+#!&#47;usr&#47;bin&#47;python</p>
+<p>import marshal<br />
+import subprocess, shlex<br />
+import re<br />
+import os<br />
+from datetime import datetime<br />
+import time<br />
+import smtplib<br />
+from email.mime.text import MIMEText</p>
+<p>today = int(time.time())</p>
+<p>window = 60*60*24*30 #30 days</p>
+<p>mailhost = "mailhost"<br />
+me = "you@yoursite.com"</p>
+<p>maxmails = 10</p>
+<p>msg = MIMEText("Perforce server is going down! Lookout!")<br />
+msg['Subject'] = "Perforce downtime this weekend"<br />
+msg['From'] = me</p>
+<p>def getRecentUsersList():<br />
+    args = shlex.split("p4 -G users")<br />
+    p = subprocess.Popen(args, stdout=subprocess.PIPE)<br />
+    userList = []<br />
+    while True:<br />
+        try:<br />
+            user = marshal.load(p.stdout)<br />
+            if int(user['Access']) > (today-window):<br />
+                userList.append(user)<br />
+        except:<br />
+            break<br />
+    return userList</p>
+<p>def getUniqueEmails(userList):<br />
+    emails = {}<br />
+    for user in userList:<br />
+        emails[user['Email']] = 1<br />
+    print "got " + str(len(emails.keys())) + " emails"<br />
+    return emails.keys()</p>
+<p>def sendEmail(emails):<br />
+    print "sending email to "+str(emails)<br />
+    s = smtplib.SMTP(mailhost)<br />
+    s.sendmail(me, emails, msg.as_string())<br />
+    s.quit()</p>
+<p>def sendEmails(emails):<br />
+    emailsubset = []<br />
+    for email in emails:<br />
+        emailsubset.append(email)<br />
+        if len(emailsubset) >= maxmails:<br />
+            sendEmail(emailsubset)<br />
+            emailsubset = []<br />
+    if len(emailsubset) > 0:<br />
+        sendEmail(emailsubset)</p>
+<p>def main():<br />
+    userList = getRecentUsersList()<br />
+    emails = getUniqueEmails(userList)<br />
+    sendEmails(emails)</p>
+<p>main()<br />
+<&#47;pre></p>

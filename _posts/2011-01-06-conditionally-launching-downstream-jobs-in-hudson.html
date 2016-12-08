@@ -1,0 +1,55 @@
+---
+layout: post
+status: publish
+published: true
+title: Conditionally launching downstream jobs in Hudson
+author:
+  display_name: Rob Petti
+  login: rpetti
+  email: rob.petti@gmail.com
+  url: http://www.robpetti.com
+author_login: rpetti
+author_email: rob.petti@gmail.com
+author_url: http://www.robpetti.com
+excerpt: "This recently came up in the hudson users mailing list, so I figured I'd
+  post it here.\r\n\r\nLets say you wanted to setup a downstream job that would only
+  run when certain conditions are met (such as certain build parameters, or anything
+  else for that matter). Well, this is what I typically use the <a href=\"http:&#47;&#47;wiki.hudson-ci.org&#47;display&#47;HUDSON&#47;Groovy+Postbuild+Plugin\">Groovy
+  Postbuild Plugin<&#47;a> for!\r\n"
+wordpress_id: 22
+wordpress_url: http://robpetti.com/?p=22
+date: '2011-01-06 15:07:27 -0700'
+date_gmt: '2011-01-06 20:07:27 -0700'
+categories:
+- Jenkins
+tags:
+- hudson
+comments:
+- id: 3479
+  author: anon
+  author_email: anon@anon.int
+  author_url: ''
+  date: '2015-04-21 19:21:22 -0600'
+  date_gmt: '2015-04-21 23:21:22 -0600'
+  content: Thanks so much.  Have trawled the net for a day looking for a viable solution
+    for my problem - this is perfect!
+---
+<p>This recently came up in the hudson users mailing list, so I figured I'd post it here.</p>
+<p>Lets say you wanted to setup a downstream job that would only run when certain conditions are met (such as certain build parameters, or anything else for that matter). Well, this is what I typically use the <a href="http:&#47;&#47;wiki.hudson-ci.org&#47;display&#47;HUDSON&#47;Groovy+Postbuild+Plugin">Groovy Postbuild Plugin<&#47;a> for!<br />
+<a id="more"></a><a id="more-22"></a></p>
+<p>Here's an example of the code I'm making use of:</p>
+<pre name="code" class="brush: groovy">
+if("true".equals(manager.build.buildVariables.get("buildInstaller")) &&<br />
+      manager.build.getResult().equals(hudson.model.Result.SUCCESS)) {<br />
+   def nextJob = manager.hudson.getItem("Installer");<br />
+   nextJob.scheduleBuild(5,<br />
+      new hudson.model.Cause.UpstreamCause(manager.build),<br />
+      new hudson.model.ParametersAction(<br />
+           new hudson.model.StringParameterValue("branchDir",<br />
+                   manager.build.buildVariables.get("branchDir"))<br />
+           )<br />
+      );<br />
+}<br />
+<&#47;pre></p>
+<p>This will launch the job called "Installer" when the current job succeeds, and the "buildInstaller" job parameter equals true. It will also pass the current value of the "branchDir" parameter and pass it into the next build. If you want to add more parameters, just add another StringParameterValue object to the ParametersAction constructor. If you want to add a static parameter value, just replace the <code>manager.build.buildVariables.get("branchDir")<&#47;code> with the string literal you want.</p>
+<p>It's important to know that while this does indeed launch the job, the dependencyGraph and other hudson plugins will not see it as a downstream job. Unfortunately, I don't think there's not much we can do about that right now without writing a whole new plugin, or enhancing an existing one like the parameterized trigger plugin.</p>

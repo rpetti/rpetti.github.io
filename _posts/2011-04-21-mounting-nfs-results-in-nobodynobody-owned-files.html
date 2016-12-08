@@ -1,0 +1,26 @@
+---
+layout: post
+status: publish
+published: true
+title: Mounting NFS results in nobody:nobody owned files
+author:
+  display_name: Rob Petti
+  login: rpetti
+  email: rob.petti@gmail.com
+  url: http://www.robpetti.com
+author_login: rpetti
+author_email: rob.petti@gmail.com
+author_url: http://www.robpetti.com
+wordpress_id: 85
+wordpress_url: http://robpetti.com/?p=85
+date: '2011-04-21 16:44:10 -0600'
+date_gmt: '2011-04-21 20:44:10 -0600'
+categories:
+- Linux
+- Technical
+tags: []
+comments: []
+---
+<p>So I ran into this problem earlier this week. Basically we have a Solaris 10 server hosting files over NFS. The NFS server that comes with Solaris 10 supports NFSv4, but doesn't seem to include idmapd, which is responsible for mapping user and group ids. Everything I've read suggests that idmapd is required on both the client and server in order for it to work correctly. Since I had no real desire to screw with the server configuration (and since other machines could mount it correctly) I kept searching.</p>
+<p>The solution I found is a bit hacky, but it works for me. Basically it boils down to adding <code>nfsvers=3<&#47;code> to the mount parameters. In my case, I was using automount, so I just added the option to every line in my &#47;etc&#47;auto.master. This just forces it to mount using NFSv3, which works because of it's simplicity, but is possibly more insecure (and not all NFS servers will support it).</p>
+<p>If possible, you should really just consider doing things the proper way, and getting idmapd set up on your servers and clients. This is just a quick work-around for when you are backed into a corner like I am.</p>

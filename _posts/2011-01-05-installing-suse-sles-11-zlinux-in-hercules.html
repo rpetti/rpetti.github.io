@@ -1,0 +1,455 @@
+---
+layout: post
+status: publish
+published: true
+title: Installing Suse SLES 11 zLinux in Hercules
+author:
+  display_name: Rob Petti
+  login: rpetti
+  email: rob.petti@gmail.com
+  url: http://www.robpetti.com
+author_login: rpetti
+author_email: rob.petti@gmail.com
+author_url: http://www.robpetti.com
+excerpt: "What follows is a chronicle of my efforts in getting Suse SLES 11 installed
+  in Hercules. Hopefully it will be of use to others who need to deal with this ridiculous
+  31 bit platform.\r\n\r\nRecently I received a request to build a product for a rather
+  ridiculous platform, S380. Needless to say, this is one of those IBM platforms where
+  they try to create their own standards, breaking all conventions when doing so,
+  and selling it at 100x the cost.\r\n\r\n"
+wordpress_id: 5
+wordpress_url: http://robpetti.com/?p=5
+date: '2011-01-05 14:13:51 -0700'
+date_gmt: '2011-01-05 19:13:51 -0700'
+categories:
+- Technical
+tags:
+- zlinux
+- virtualization
+comments:
+- id: 15
+  author: Roman
+  author_email: roman.rubiales@tg21software.es
+  author_url: ''
+  date: '2012-05-08 04:35:59 -0600'
+  date_gmt: '2012-05-08 08:35:59 -0600'
+  content: Thank you for the information provided, it helped me to install SLES under
+    Hercules successfully.
+- id: 2500
+  author: Gerard
+  author_email: ghowells@gmail.com
+  author_url: ''
+  date: '2013-09-11 17:13:41 -0600'
+  date_gmt: '2013-09-11 21:13:41 -0600'
+  content: Great instructions, thanks so much. I tried to get it running under my
+    Windows laptop initially (can't have native Linux install on my work lappy due
+    to Windows-only encryption :-( ) and ran in to all sorts of TUNTAP64 issues but
+    running in my Slack VM is flawlessly wonderful. Now I have a SLES install that
+    replicates (to an extent) the guests running in my LPARs at work for testing and
+    the like without borking something important by mistake! Thanks again :-)
+- id: 3322
+  author: Stephen Bovy
+  author_email: stephen.bovy@teradata.com
+  author_url: ''
+  date: '2014-09-18 14:24:54 -0600'
+  date_gmt: '2014-09-18 18:24:54 -0600'
+  content: "How did you decide what to use for a mac address ?\r\n\r\n-m 3E:31:C5:59:36:DC\r\n\r\nAnd
+    is it possible to use your bridge technique with multiple instances of Hercules
+    ? \r\n\r\nIt is possible to set up the second lcs interface without removing the
+    tun&#47;tap interface thus causing \r\nthe zlinux VM to be multi-homed   \r\n\r\nThus
+    the tun&#47;tap would be a back-up connection method  ,  or it could be removed
+    after we verify that\r\nthe lcs interface is working"
+- id: 3323
+  author: Rob Petti
+  author_email: rob.petti@gmail.com
+  author_url: http://www.robpetti.com
+  date: '2014-09-18 14:41:57 -0600'
+  date_gmt: '2014-09-18 18:41:57 -0600'
+  content: |-
+    This was a long time ago, so I can't actually recall how I decided which MAC to use. I imagine you could use pretty much anything you want, though, as long as it doesn't conflict with anything on your network.
+
+    Yes, it's possible to run multiple instances on the bridge. You can add as many interfaces as you want to a bridge using bridge-utils. We're currently using it to run 2 instances, one on tap0 and one on tap1.
+
+    I personally use the CTCI interface as a backup connection method, and the tun&#47;tap as the primary, so setting up a second one isn't necessary.
+- id: 3324
+  author: Stephen Bovy
+  author_email: stephen.bovy@teradata.com
+  author_url: ''
+  date: '2014-09-19 23:52:25 -0600'
+  date_gmt: '2014-09-20 03:52:25 -0600'
+  content: "Thanks , I am very eager to use a bridge because I think it is easer then
+    \r\n\r\nIP masquerade forwarding, in fact I am very frustrated because I have
+    not been  able to get it working \r\n\r\nOne question where did the tap device
+    come from  ?   \r\n\r\nDoes Herc create a tap device when you use LCS ?? \r\n\r\nYour
+    references to tun&#47;tap are confusing  because the CTCL  is  a  tun device    \r\n\r\nI
+    did not realize they are separate devices ( I thought they were linked together
+    some-how )\r\n\r\nI also discovered that with SLES the first part of your script
+    can be preset with YaST Network Set Up \r\n\r\nonly the second part is necessary
+    \ \r\n\r\n#remove route added by hercules\r\nroute del -net $GUEST_IP netmask
+    255.255.255.255 dev tap0\r\n \r\n#change tap0 hw address (it's the same address\r\n#on
+    the hercules side by default, so this needs to be changed)\r\n\r\nifconfig tap0
+    down\r\nip link set dev tap0 address 3E:31:C5:59:36:DD\r\nifconfig tap0 up\r\n
+    \r\n#bring tap up in promiscuous mode\r\nifconfig tap0 0.0.0.0 multicast promisc
+    up\r\n \r\n#add tap into the bridge\r\nbrctl addif bridge tap0\r\n\r\nAlso I wonder
+    if this can be done before the z-os boots using  herc auto.rc boot procedures\r\n\r\nBTW
+    thanks again for the excellent tutuorials  \r\n\r\nA few statements to clarify
+    the distinction between  the ctcl tun device vs the lcs tap device \r\nwould go
+    a long way to clear up a lot of un-answered questions"
+- id: 3325
+  author: Stephen Bovy
+  author_email: stephen.bovy@teradata.com
+  author_url: ''
+  date: '2014-09-20 00:06:06 -0600'
+  date_gmt: '2014-09-20 04:06:06 -0600'
+  content: "LCS     (LAN Channel Station Emulation) \r\nAn emulated Lan Channel Station
+    Adapter. This emulation mode appears to the operating system running in the Hercules
+    machine as an IBM 8232 LCS device, an IBM 2216 router, a 3172 running ICP (Interconnect
+    Communications Program), the LCS3172 driver of a P&#47;390, or an IBM Open Systems
+    Adapter. \r\n\r\nRather than a point-to-point link, this emulation creates a virtual
+    ethernet adapter through which the guest operating system running in the Hercules
+    machine can communicate. As such, this mode is not limited to TCP&#47;IP traffic,
+    but in fact will handle any ethernet frame. \r\n\r\nThe configuration statement
+    for LCS is as follows: \r\n\r\nNOTE: There are no required parameters for the
+    LCS emulation, however there are several options that can be specified on the
+    config statement: \r\n\r\nNOTE: On the MAC OS X Platform, the long option format
+    (--xxx) is not supported. Only the short option format (-x : one dash, one letter)
+    should be used. \r\n\r\n\r\n -n devname    or   --dev devname \r\nwhere devname
+    is: \r\n\r\n\r\n (Linux&#47;Unix) \r\nthe name of the TUN&#47;TAP special character
+    device, normally &#47;dev&#47;net&#47;tun. \r\n\r\nAgain I must ask  how did you
+    get a tap device the default is a tun device  \r\nand I do not even see a tap
+    device in my system  there is no \r\n&#47;dev&#47;net&#47;tap    \r\n\r\nHow can
+    I create use and access the tap device (is the tap device required vs tun )  ??"
+- id: 3326
+  author: Rob Petti
+  author_email: rob.petti@gmail.com
+  author_url: http://www.robpetti.com
+  date: '2014-09-20 01:03:56 -0600'
+  date_gmt: '2014-09-20 05:03:56 -0600'
+  content: "Sorry, I refer to tun and tap as tun&#47;tap since they generally fill
+    the same roles, they just operate at different network layers.\r\n\r\nThe CTCI
+    device defined in your hercules configuration is a point-to-point tun device.
+    I only use it as a backup connection, and for allowing the guest OS to run commands
+    on the host OS (for automating the bridge creation, for instance, see page 4).
+    I do not believe you can use it with a bridged connection, but you could probably
+    use the host as a NAT using masquerade rules and IP forwarding, as I believe you've
+    tried.\r\n\r\nThe LCS device is the tap version of this, and a tap device gets
+    created <i>by hercules<&#47;i> on the host OS once the guest has been started.
+    Unlike tun, tap devices can handle any network frame (not just IP), and thus,
+    get it's own mac address and even be bridged to other ethernet connections. When
+    your hercules instance is started up with an LCS device specified in the configuration,
+    you should see a new tap device created on the host with the mac address you specified.
+    If you don't see it, make sure you are using 'ifconfig -a' to list all devices.
+    The script I provided on page 3 should help you get the bridge up and running
+    using the newly created device.\r\n\r\nDoes that clear things up a bit more?"
+- id: 3327
+  author: Stephen Bovy
+  author_email: stephen.bovy@teradata.com
+  author_url: ''
+  date: '2014-09-20 02:00:57 -0600'
+  date_gmt: '2014-09-20 06:00:57 -0600'
+  content: "Yikes YaST  does not let me edit  00e26   \r\n\r\nI select it tab to edit
+    and press enter and it jumps out with out editing !!  \r\n\r\nWhat the heck"
+- id: 3328
+  author: Stephen Bovy
+  author_email: stephen.bovy@teradata.com
+  author_url: ''
+  date: '2014-09-20 13:35:28 -0600'
+  date_gmt: '2014-09-20 17:35:28 -0600'
+  content: "Thanks very much for your patient help !\r\n\r\nYes,  \r\n\r\nNow I see
+    \r\n\r\nIN the herc console it says \r\n\r\n0E26: TAP device tap0 opened \r\n\r\nand
+    when I did ifconfig  -a  I saw  the  tap0 device\r\n\r\nAlso ON  sles I can pre-confiure
+    and set up the bridge permanently on boot-up , so the first part of your script
+    is not needed.\r\n\r\nThe pre-configured bridge is named \"br0\"     \r\n\r\nAlso
+    it looks like I can run the bridge script prior to ipl   (which means I can auto-run)
+    the script \r\nusing  herc.rc   \r\n\r\nNow  if I can just execute the x 11 version
+    of yast to configure the new bridge interface \r\nthe text version of yast is
+    useless"
+- id: 3329
+  author: Stephen Bovy
+  author_email: stephen.bovy@teradata.com
+  author_url: ''
+  date: '2014-09-20 13:38:02 -0600'
+  date_gmt: '2014-09-20 17:38:02 -0600'
+  content: "What happens to the tap0 device in relation to the bridge when you shut
+    down , and\r\nthen re-start your herc-z instance \r\n\r\nDo you need to re-set
+    and re-add to the bridge every time you bring herc up  ?"
+- id: 3330
+  author: Stephen Bovy
+  author_email: stephen.bovy@teradata.com
+  author_url: ''
+  date: '2014-09-20 13:40:50 -0600'
+  date_gmt: '2014-09-20 17:40:50 -0600'
+  content: Is their a command I can use to display&#47;verify the bridge status ?
+- id: 3331
+  author: Stephen Bovy
+  author_email: stephen.bovy@teradata.com
+  author_url: ''
+  date: '2014-09-20 14:05:02 -0600'
+  date_gmt: '2014-09-20 18:05:02 -0600'
+  content: "dag nab it \r\n\r\nneither YaST  nor  yast2   is allowing me to  edit
+    configure the  0E26  device \r\n\r\nWhen I hit edit in gui mode  the edit screen
+    starts to appear for an instance, and then \r\ndisappears into the bit-bucket
+    \ \r\n\r\nUnless I can figure a way to pre-configure this during the install process
+    I might be SOL\r\n\r\nand back to the stupid ip-tables  which I can-not figure
+    out how to make it work"
+- id: 3332
+  author: Rob Petti
+  author_email: rob.petti@gmail.com
+  author_url: http://www.robpetti.com
+  date: '2014-09-20 15:42:23 -0600'
+  date_gmt: '2014-09-20 19:42:23 -0600'
+  content: I believe it's removed, which is why I needed to run the bridge script
+    on startup of the guest every time, hence the hack on page 4.
+- id: 3333
+  author: Rob Petti
+  author_email: rob.petti@gmail.com
+  author_url: http://www.robpetti.com
+  date: '2014-09-20 15:42:34 -0600'
+  date_gmt: '2014-09-20 19:42:34 -0600'
+  content: man brctl
+- id: 3334
+  author: Rob Petti
+  author_email: rob.petti@gmail.com
+  author_url: http://www.robpetti.com
+  date: '2014-09-20 15:45:41 -0600'
+  date_gmt: '2014-09-20 19:45:41 -0600'
+  content: Sorry to hear you are having trouble, but I honestly don't know what to
+    suggest. I didn't have any trouble editing the configuration in the guest.
+- id: 3335
+  author: Rob Petti
+  author_email: rob.petti@gmail.com
+  author_url: http://www.robpetti.com
+  date: '2014-09-20 15:46:51 -0600'
+  date_gmt: '2014-09-20 19:46:51 -0600'
+  content: The bridge still needs to be configured properly once the tap device becomes
+    available. The hack on page 4, as far as I know, is still needed.
+- id: 3336
+  author: Stephen Bovy
+  author_email: stephen.bovy@teradata.com
+  author_url: ''
+  date: '2014-09-20 16:39:20 -0600'
+  date_gmt: '2014-09-20 20:39:20 -0600'
+  content: Thanks again for your help
+- id: 3337
+  author: Stephen Bovy
+  author_email: stephen.bovy@teradata.com
+  author_url: ''
+  date: '2014-09-21 00:06:52 -0600'
+  date_gmt: '2014-09-21 04:06:52 -0600'
+  content: "Do you think you could locate and post or send me your netwok-device configuration
+    \r\nfiles? maybe I can set it up manually"
+- id: 3338
+  author: Rob Petti
+  author_email: rob.petti@gmail.com
+  author_url: http://www.robpetti.com
+  date: '2014-09-21 00:13:47 -0600'
+  date_gmt: '2014-09-21 04:13:47 -0600'
+  content: 'Not at the moment, sorry. There is a lot of documentation available online,
+    however: https:&#47;&#47;www.suse.com&#47;documentation&#47;sles11&#47;book_sle_admin&#47;data&#47;sec_basicnet_manconf.html'
+- id: 3339
+  author: Stephen Bovy
+  author_email: stephen.bovy@teradata.com
+  author_url: ''
+  date: '2014-09-21 00:22:56 -0600'
+  date_gmt: '2014-09-21 04:22:56 -0600'
+  content: "I see a file for  ctc0  in   &#47;etc&#47;sysconfig&#47;network  \r\n\r\nYou
+    must also have a similar file for the lcs device  ?"
+- id: 3340
+  author: Rob Petti
+  author_email: rob.petti@gmail.com
+  author_url: http://www.robpetti.com
+  date: '2014-09-21 00:24:20 -0600'
+  date_gmt: '2014-09-21 04:24:20 -0600'
+  content: Yes, but I can't get it right now, sorry.
+- id: 3341
+  author: Stephen Bovy
+  author_email: stephen.bovy@teradata.com
+  author_url: ''
+  date: '2014-09-21 12:22:34 -0600'
+  date_gmt: '2014-09-21 16:22:34 -0600'
+  content: Thanks again  , I appreciate your help
+- id: 3342
+  author: Stephen Bovy
+  author_email: stephen.bovy@teradata.com
+  author_url: http://WHB4
+  date: '2014-09-22 17:33:59 -0600'
+  date_gmt: '2014-09-22 21:33:59 -0600'
+  content: "I found the following red-hat link helpful ::  \r\n\r\nhttps:&#47;&#47;access.redhat.com&#47;documentation&#47;en-US&#47;Red_Hat_Enterprise_Linux&#47;6&#47;html&#47;Installation_Guide&#47;ap-s390info-Adding_a_Network_Device-LCS_Device.html\r\n\r\nBut
+    I discovered that the only way that I could get the device up and running was
+    by following the\r\nfollowing red-hat instructions ::\r\n\r\nSet the device online:
+    \r\n# echo 1 > &#47;sys&#47;bus&#47;ccwgroup&#47;drivers&#47;lcs&#47;read_device_bus_id&#47;online\r\n\r\nWhy
+    is  SLES such a pain in the but ?"
+- id: 3343
+  author: Rob Petti
+  author_email: rob.petti@gmail.com
+  author_url: http://www.robpetti.com
+  date: '2014-09-22 17:43:19 -0600'
+  date_gmt: '2014-09-22 21:43:19 -0600'
+  content: No idea, but I certainly didn't need to do that... If you are needing to
+    trick the driver into thinking the device is online, then something else is wrong.
+- id: 3345
+  author: Stephen Bovy
+  author_email: stephen.bovy@teradata.com
+  author_url: ''
+  date: '2014-09-23 11:54:13 -0600'
+  date_gmt: '2014-09-23 15:54:13 -0600'
+  content: I was just informed that LCS support in current versions of HERC is broken
+    :)
+- id: 3346
+  author: Rob Petti
+  author_email: rob.petti@gmail.com
+  author_url: http://www.robpetti.com
+  date: '2014-09-23 11:57:15 -0600'
+  date_gmt: '2014-09-23 15:57:15 -0600'
+  content: I'm running 3.05, if that helps.
+---
+<p>What follows is a chronicle of my efforts in getting Suse SLES 11 installed in Hercules. Hopefully it will be of use to others who need to deal with this ridiculous 31 bit platform.</p>
+<p>Recently I received a request to build a product for a rather ridiculous platform, S380. Needless to say, this is one of those IBM platforms where they try to create their own standards, breaking all conventions when doing so, and selling it at 100x the cost.</p>
+<p><a id="more"></a><a id="more-5"></a></p>
+<p>Ranting aside, we have some customers using our product on this platform. The builds they are running were created on a machine that was loaned out to us, but we no longer have access to it.</p>
+<p>Enter Hercules. This is a straight emulator for the S380&#47;zSeries platform. Since the platform is so different from anything that's considered sane or normal, the emulator does things the hard way by emulating the entire processor and machine. Modern virtualization solutions tend to perform tricks that let the hardware of the vm host run the code directly. Unfortunately that isn't an option here, so anything running in Herc will be dog slow. I'm not trying to knock the developers, because they did a good job, that's just the reality of the situation.</p>
+<p><strong>Setup<&#47;strong></p>
+<p>First off I downloaded Suse SLES 11 zLinux from the Suse <a href="http:&#47;&#47;www.novell.com&#47;linux&#47;">webpage<&#47;a>. There are two DVDs, but you'll only need the first one in order to do a basic installation.</p>
+<p>Next, you need to install Hercules on your host system. I've used Ubuntu Server 10.04 LTS and 8.04 LTS. For the latter, you'll need to compile Hercules from source, because I ran into networking issues with Herc versions lower than 3.05. For 10.04, you can simply use the versions in the repos:</p>
+<pre name="code" class="brush: bash">
+$ sudo apt-get install hercules<br />
+<&#47;pre></p>
+<p>You'll also need to install <code>apache2<&#47;code>. The reason being is that The SuSE installation disk does not come with mountable tape images, so you'll need to do a network install. This requires a working http server.</p>
+<pre name="code" class="brush: bash">
+$ sudo apt-get install apache2<br />
+<&#47;pre></p>
+<p>Next we need to mount the disk image we downloaded:</p>
+<pre name="code" class="brush: bash">
+$ sudo mkdir -p &#47;var&#47;www&#47;install&#47;DVD1<br />
+$ sudo mount -o loop SUSE-DVD1.iso &#47;var&#47;www&#47;install&#47;DVD1<br />
+<&#47;pre></p>
+<p>Now it's time to setup Hercules. This is the <code>hercules.cnf<&#47;code> I used to set up the system.</p>
+<pre name="code" class="brush: plain">
+ARCHMODE ESAME<br />
+OSTAILOR QUIET<br />
+LOADPARM 0120....<br />
+CPUSERIAL 000069<br />
+CPUMODEL 2064<br />
+LPARNAME HERCULES<br />
+MAINSIZE 512<br />
+SYSEPOCH 1900<br />
+PANRATE FAST<br />
+NUMCPU 2<br />
+CNSLPORT 3270<br />
+XPNDSIZE 0</p>
+<p>HTTPROOT &#47;usr&#47;local&#47;share&#47;hercules&#47;<br />
+HTTPPORT 8081 NOAUTH</p>
+<p>0120    3390    &#47;srv&#47;zlinux&#47;root.0120<br />
+0121    3390    &#47;srv&#47;zlinux&#47;swap.0121<br />
+0E20.2  3088    CTCI 10.1.1.2 10.1.1.3<br />
+#Leave commented for now, we'll come back to it later.<br />
+#0E26.2  3088    LCS 172.29.9.148 -m 3E:31:C5:59:36:DC<br />
+<&#47;pre></p>
+<p>I won't go into it too much, as the options are described on the hercules webpage. Note, however that the devices <code>0120<&#47;code> and <code>0121<&#47;code> are pointing towards two files. These are going to be your disk images. Feel free to change them to whatever location you want. Next, we'll actually create the disk images:</p>
+<pre name="code" class="brush: bash">
+$ sudo dasdinit -lfs root.0120 3390 ROOT 8000<br />
+$ sudo dasdinit -lfs swap.0121 3390 SWAP 500<br />
+<&#47;pre><br />
+The last number in the command is the size of the disk in cylinders. Each cylinder is approximately 800KB (852480 bytes&#47;cyl to be exact) though I found that there was slightly less usable disk space than I expected. Regardless, 8000 cylinders should be enough for your installation. You can always add more disks later.</p>
+<p><!--nextpage--><br />
+<strong>Installation<&#47;strong></p>
+<p>Now we start the actual installation! Go into the directory with your disks and your <code>hercules.cnf<&#47;code> file, and run the following.</p>
+<pre name="code" class="brush: bash">
+$ sudo hercules -f hercules.cnf<br />
+<&#47;pre><br />
+This should load the hercules ncurses gui. Unfortunately, there doesn't seem to be a headless mode, so in order to run this as a server you'll need to do some magic with <code>screen<&#47;code>. We'll get to that later. For now, start the installation:</p>
+<pre name="code" class="brush: plain">
+> ipl &#47;var&#47;www&#47;install&#47;DVD1&#47;suse.ins<br />
+<&#47;pre></p>
+<p>The rest of the process is pretty straight forward. Choose <code>Start Installation<&#47;code>, <code>Network<&#47;code>, <code>HTTP<&#47;code>, and <code>Channel to Channel<&#47;code>. By default, all commands typed are interpreted by hercules, not the guest operating system, so you'll need to escape everything you type by prepending it with a period. So to select option 2, you need to type <code>.2<&#47;code></p>
+<p>After you choose Channel to Channel, you need to select the read and write channels. The defaults work, so just use those:</p>
+<pre name="code" class="brush: plain">
+.0.0.0e20<br />
+.0.0.0e21<br />
+<&#47;pre><br />
+Select <code>Compatibility Mode<&#47;code> and No for automatic configuration via DHCP. We need to set up the ip addresses manually. If you used my config file, specify <code>10.1.1.2<&#47;code> and <code>10.1.1.3<&#47;code> for the local and remote side respectively. Next it will ask you for your nameserver, just give it the IP address of whatever your host is configured to use.</p>
+<p>Now you need to enter the IP address of the webserver. Give it <code>10.1.1.3<&#47;code> (see where we're going here?) Then give it the installation media path of <code>install&#47;DVD1&#47;<&#47;code>. Choose SSH as the display type, and give it a simple temporary password. It should now load the installation. Once it's loaded, some instructions will appear on the screen. From another terminal on the host machine, run:</p>
+<pre name="code" class="brush: bash">
+$ ssh root@10.1.1.2<br />
+# yast<br />
+<&#47;pre><br />
+Proceed through the installation as you normally would for any other system. When you get to the disk activation screen, select DASD and activate both disks that you've set up. There are options for both activating and selecting, make sure you select <i>and<&#47;i> activate both disks. It'll ask you to format them as well, so do so.</p>
+<p>Once you get to the installation summary, it will likely tell you that the automatic partitioning couldn't find a partitioning scheme on it's own. Enter the partitioner and set up the disks how you like. I used the root disk as a single ext3 partition mounted on <code>&#47;<&#47;code>, and the swap disk as a single swap partition. Once you are done, you can start the actual installation process. This took about 5-6 hours to complete for me, so leave it for the night and come back to it in the morning. At this point it will automatically reboot and ask you to ssh back into the machine and finish up the installation by running a command. Follow the onscreen instructions, and the install will be complete!</p>
+<p>To boot into the new environment (if it didn't do so automatically) type the following into the hercules prompt after starting it up:</p>
+<pre name="code" class="brush: plain">
+ipl 0120<br />
+<&#47;pre></p>
+<p>You can also add this to a <code>hercules.rc<&#47;code> file in the working directory, which hercules will read whenever it's started up. Perfect for automatically starting it up in <code>screen<&#47;code> on bootup. ;)</p>
+<p><!--nextpage--><br />
+<strong>Post-Install Configuration<&#47;strong> - Networking Hacks</p>
+<p>You've now got a working zLinux installation with no networking capabilities. If this is all you need, then you are done. If you need networking, then we'll need to set up a bridge.</p>
+<p>First, lets get the guest operating system set up. Shut down Hercules, and edit the <code>hercules.cnf<&#47;code> file. Uncomment the 0E26.2 interface line, and replace the IP address with the IP you want the guest operating system to use on your network. This should not be the same as the host system! It should be totally separate, but still in your netmask.</p>
+<p>Start up the server as describe above. SSH to the zLinux instance and run yast as you've done previously. From here, you can set up your network device as you normally would. Choose the <code>0.0.0e26 device (IBM OSA2 Adapter)<&#47;code> and edit it. Set it up exactly as you would a computer plugged directly into your network, using the IP address you entered in the <code>hercules.cnf<&#47;code> file. This might disconnect you when it sets up the network interfaces. If that happens, log in using the hercules prompt (remember to use '.' to interface with the guest OS) and shut it down nicely.</p>
+<p>Now comes the host side configuration. If you've ever worked with network bridges and TAP&#47;TUN devices in linux then this should be a breeze. If not, you should be ok with just copying everything I've done with only minor changes...</p>
+<p>First, install the necessary utilities:</p>
+<pre name="code" class="brush: bash">
+sudo apt-get install uml-utilities bridge-utils<br />
+<&#47;pre></p>
+<p>The following script is what I use to set up the bridge.</p>
+<pre name="code" class="brush: bash">
+#IP of the host machine<br />
+HOST_IP=172.29.9.144<br />
+#IP of the zLinux installation<br />
+GUEST_IP=172.29.9.148<br />
+#Interface the host is using to connect to the internet<br />
+HOST_INTERFACE=eth0</p>
+<p>#prepare eth0 for linking into the bridge<br />
+ifconfig $HOST_INTERFACE 0.0.0.0 promisc up</p>
+<p>#setup bridge<br />
+brctl addbr bridge<br />
+brctl setfd bridge 0<br />
+brctl sethello bridge 0<br />
+brctl stp bridge 0<br />
+ifconfig bridge $HOST_IP netmask 255.255.0.0 up</p>
+<p>#add eth0 to the bridge<br />
+brctl addif bridge $HOST_INTERFACE</p>
+<p>#remove route added by hercules<br />
+route del -net $GUEST_IP netmask 255.255.255.255 dev tap0</p>
+<p>#change tap0 hw address (it's the same address<br />
+#on the hercules side by default, so this needs to be changed)<br />
+ifconfig tap0 down<br />
+ip link set dev tap0 address 3E:31:C5:59:36:DD<br />
+ifconfig tap0 up</p>
+<p>#bring tap up in promiscuous mode<br />
+ifconfig tap0 0.0.0.0 multicast promisc up</p>
+<p>#add tap into the bridge<br />
+brctl addif bridge tap0<br />
+<&#47;pre><br />
+The script is pretty straight forward, but there are some important things to note. You can see that the script changes the <code>tap0<&#47;code> hardware address to something different than the interface that's defined in the <code>hercules.cnf<&#47;code> file. This is by design, and is required in order for packets to get forwarded correctly.</p>
+<p>Additionally, this script must be run once the guest OS has <i>fully booted<&#47;i>. This poses an interesting problem, and you can either get around it using a lengthy sleep in your startup script, or by having the guest run the script on the host remotely using a passwordless ssh setup over the Channel to Channel connection.</p>
+<p>That should be it! I might come back to this later and add the scripts for automatic start&#47;restart&#47;shutdown.</p>
+<p>Edit: See the next page for startup hacks!<br />
+<!--nextpage--><br />
+<strong>Automatic startup hacks<&#47;strong></p>
+<p>Right now, you still need to start up the bridge once the guest OS has initialized the network device. This is hardly optimal so I'm going to suggest a different solution.</p>
+<p>First set up passwordless login to the host from the guest. Run the following as root.</p>
+<pre name="code" class="brush: bash">
+# ssh-keygen -t rsa<br />
+# ssh-copy-id -i ~&#47;.ssh&#47;id_rsa.pub root@10.1.1.3<br />
+<&#47;pre><br />
+Then <code>ssh root@10.1.1.3<&#47;code> to make sure you can login without a password.</p>
+<p>Create a new file <code>&#47;etc&#47;init.d&#47;bridge<&#47;code> with the following contents.</p>
+<pre name="code" class="brush: bash">
+#!&#47;bin&#47;sh<br />
+echo "(re)Initializing Network Bridge"<br />
+&#47;usr&#47;bin&#47;ssh root@10.1.1.3 sh &#47;srv&#47;zLinux_SUSE_11&#47;bridge.sh<br />
+<&#47;pre><br />
+And symlink it to rc3.d right after the network script.</p>
+<pre name="code" class="brush: bash">
+# ln -s &#47;etc&#47;init.d&#47;bridge &#47;etc&#47;init.d&#47;rc3.d&#47;S03bridge<br />
+<&#47;pre><br />
+And that's pretty much it. Once the network device has been initialized by the network startup script (<code>S02network<&#47;code> on my machine) it will ssh to the host and setup the bridge.</p>
+<p>In order to start up hercules without having to log in (eg, from a startup script on the host) you can use the following script. It's not perfect, and can certainly be improved, but it works well enough for starting the vm from a startup script.</p>
+<pre name="code" class="brush: bash">
+#start herc in a screen. use 'ipl 0120' at the prompt to boot the system<br />
+cd &#47;srv&#47;zLinux_SUSE_11&#47;<br />
+screen -S 'fiery' -d -m sudo hercules -f &#47;srv&#47;zLinux_SUSE_11&#47;hercules.cnf<br />
+echo "Hercules has started."<br />
+cd -<br />
+<&#47;pre><br />
+This should probably still be run as root, even though the sudo command is there. Otherwise the screen will start as the wrong user, and probably ask for a password too.</p>
