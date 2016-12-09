@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Perforce Oddities: cannot submit unicode type file using non-unicode server
+title: "Perforce Oddities: cannot submit unicode type file using non-unicode server"
 ---
 Ran into this little gem today... I've got a project that I'm currently trying to branch. It's a very simple integration operation from one location to another, nothing crazy. Of course Perforce needs to make it as complicated as possible by throwing me this error for a couple of our files:
 

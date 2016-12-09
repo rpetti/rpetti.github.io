@@ -11,7 +11,7 @@ The alternative is to package the jar and it's dependencies in the installer, an
 
 You can always add a main class, of course, but I'm far more masochistic than that. We have a simple plugin that runs a groovy script provided as a variable, so I figured that's the best way to go. If you don't have such a plugin, I highly recommend writing something like it. I can't provide ours, but it shouldn't be too difficult to quickly throw together.
 
-{% highlight groovy }
+{% highlight groovy %}
 def classLoader;
 
 def loadJars(jarPath) {

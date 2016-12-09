@@ -20,9 +20,7 @@ Once you've verified that passwordless authentication works, now it's time to se
 
 Give it a shot again:
 
-    
     jenkins@jenkins-master:~$ ssh releng@windows-slave-hostname java -jar C:/jenkins/slave.jar -text
-    {% endhighlight %}
 
 It should return something like:
 

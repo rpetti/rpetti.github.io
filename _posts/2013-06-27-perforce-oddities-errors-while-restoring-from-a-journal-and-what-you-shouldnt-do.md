@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Perforce Oddities: errors while restoring from a journal, and what you shouldn''t
+title: "Perforce Oddities: errors while restoring from a journal, and what you shouldn't do"
 ---
 Twice this month I've run into the situation where one of our db.* files got corrupted, and started throwing "BTree is corrupt!" errors on various commands. The first instance was caused by our system running out of main memory, and reaping p4d processes while they were writing to the database tables. The second instance was caused by exhausted disk space.
 
