@@ -23,7 +23,7 @@ footer-links:
   flickr:
   github: rpetti/
   instagram:
-  linkedin:
+  linkedin: robert-petti-b33aa821
   pinterest:
   rss: # just type anything here for a working RSS icon
   twitter: rpetti
@@ -41,7 +41,7 @@ google_analytics:
 
 # Your website URL (e.g. http://barryclark.github.io or http://www.barryclark.co)
 # Used for Sitemap.xml and your RSS feed
-url:
+url: http://robpetti.com
 
 # If you're hosting your site at a Project repository on GitHub pages
 # (http://yourusername.github.io/repository-name)
