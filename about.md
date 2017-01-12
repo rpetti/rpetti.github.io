@@ -6,7 +6,7 @@ permalink: /about/
 
 Automation fanatic, linux evangelist, avid gamer, and legacy code archaeologist.
 
-[Resume](/resume)
+[Resume](/resume.html)
 
 ### Contact me
 
