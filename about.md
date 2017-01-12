@@ -6,6 +6,8 @@ permalink: /about/
 
 Automation fanatic, linux evangelist, avid gamer, and legacy code archaeologist.
 
+[Resume](/resume)
+
 ### Contact me
 
 [rob.petti@gmail.com](mailto:rob.petti@gmail.com)
