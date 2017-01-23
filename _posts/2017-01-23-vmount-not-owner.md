@@ -1,6 +1,6 @@
 ---
-title: 'vmount: Not owner' when mounting Linux NFS export on AIX
 layout: post
+title: "'vmount: Not owner' when mounting Linux NFS export on AIX"
 ---
 
 I recently ran into this issue while trying to mount an NFS export on a linux server on an AIX server.
