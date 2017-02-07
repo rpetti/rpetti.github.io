@@ -11,8 +11,8 @@ This was caused by how Perforce does authentication in a replicated environment 
 
 This is an _insane_ default, as it makes a replicated environment almost useless when using ticket automation. Fortunately, the solution is [here](http://answers.perforce.com/articles/KB/11958). In my case, I was running v15.1, so I just ran this:
 
- p4 configure set cluster.id=myClusterName
- p4 configure set replicaName#rpl.forward.login=1
+	p4 configure set cluster.id=myClusterName
+	p4 configure set replicaName#rpl.forward.login=1
 
 Note that apparently these configurables have changed multiple times in the past few years, so check the KB so see what works for your version.
 
