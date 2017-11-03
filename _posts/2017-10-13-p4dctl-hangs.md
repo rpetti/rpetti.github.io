@@ -3,7 +3,7 @@ title: "p4dctl hangs on startup"
 layout: post
 ---
 
-Perforce has introduced a rather neat utility called [p4dctl](https://www.perforce.com/perforce/r17.1/manuals/p4dist/Content/P4Dist/appendix.p4dctl.html) that assists with managing the various services (p4d, p4p, p4broker) that you might want to run on a linux machine. They even provide deb and rpm packages for it. Unfortunately, their RPM containis an init.d script that is incompatible with systemd, which is what comes with RHEL/CentOS >= 7. This may also be an issue in modern Debian based systems, but I haven't tested it.
+Perforce has introduced a rather neat utility called [p4dctl](https://www.perforce.com/perforce/r17.1/manuals/p4dist/Content/P4Dist/appendix.p4dctl.html) that assists with managing the various services (p4d, p4p, p4broker) that you might want to run on a linux machine. They even provide deb and rpm packages for it. Unfortunately, their RPM contains an init.d script that is incompatible with systemd, which is what comes with RHEL/CentOS >= 7. This may also be an issue in modern Debian based systems, but I haven't tested it.
 
 Here's an example of what I'm talking about:
 
