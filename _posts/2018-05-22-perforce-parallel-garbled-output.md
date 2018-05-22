@@ -22,4 +22,4 @@ It seems that at some point, the client was changed to print it's exit code for 
 
 Perforce support claims that this has been an issue since 2014.1, when parallel operations were first introduced, but my tests show that it was introduced in 2016.2. They also claim that it's a very difficult fix, despite being an extremely obvious one (don't print exit codes when you are a child process/thread).
 
-I've tried to explain this to them, but it seems Perforce support has taken a massive nosedive lately in terms of quality... In the meantime, their "recommendation" is to turn off parallel syncing entirely, or not rely on the log output from `-s`. Neither of these are real solutions, but it's what we're stuck with until Perforce gets their head out of their asses and actually listens to customer feedback again.
+I've tried to explain this to them, but it seems Perforce support has taken a massive nosedive lately in terms of quality... In the meantime, their "recommendation" is to turn off parallel syncing entirely, or not rely on the log output from `-s`. Neither of these are real solutions, but it's what we're stuck with until Perforce decides to resolve the issue.
