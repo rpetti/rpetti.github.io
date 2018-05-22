@@ -38,3 +38,5 @@ As a result, systemctl waits for that pid file to be created indefinitely, as sh
 	Oct 13 21:12:52 bg-perforce--proxy-d001 systemd[1]: PID file /var/run/... (one for each managed service) not readable (yet?) after start.
 
 Simply removing the `# pidfile:` line entirely and running `systemctl daemon-reload` allows the service to be started/stopped by systemd without any issues. I've already notified Perforce support of this problem, so hopefully I can convince them it's an actual problem that needs to be fixed, otherwise there will probably be a lot of confused admins out there trying to use this on a modern RHEL/CentOS system for the first time.
+
+*Update* 2018-05-16: Perforce still has not resolved the issue. I've pinged them again, and thankfully they were able to partially reproduce the issue and will hopefully fix it in the next release (2018.3?)
