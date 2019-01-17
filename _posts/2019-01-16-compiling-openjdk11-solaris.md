@@ -41,7 +41,15 @@ Paradoxically, compiling a JDK requires a JDK. You'll need to procure JDK 10 or 
 
 ## Fetch source code
 
-If you haven't already done so, you'll need to download the OpenJDK source. This can take an extremely long time, so if you can find another trusted download source of just the latest code, I recommend doing so. If not, then just run the following:
+If you haven't already done so, you'll need to download the OpenJDK source. This can take an extremely long time, so if you can find another trusted download source of just the latest code, I recommend doing so. If not, just pull directly from mercurial.
+
+If you need the latest code, then use the following. For some reason the java devs duplicated their entire repo for updates, rather than just using branches or tags. Thankfully, this one actually has release tags if you only want to build a specific update.
+
+```
+hg clone https://hg.openjdk.java.net/jdk-updates/jdk11u jdk11
+```
+
+If you only need the 11.0.0 GA code, then use the following repo:
 
 ```
 hg clone https://hg.openjdk.java.net/jdk/jdk11 jdk11
@@ -57,6 +65,8 @@ I found that some patching to the jdk11 code was necessary in order to get it to
 cd jdk11
 patch -p1 < ~/Downloads/jdk11-sol114.patch
 ```
+
+I would submit this patch to the ticket in question, but Java development is extremely gated so there's no way for me to access their ticketing system.
 
 ## Creating a Sysroot
 
