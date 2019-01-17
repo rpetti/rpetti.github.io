@@ -70,8 +70,7 @@ pkg -R sysroot install --accept entire@0.5.11-0.175.1 release/name@0.5.11-0.175.
 pkg -R sysroot install --accept system/core-os@0.5.11-0.175.1
 pkg -R sysroot install --accept system/header@0.5.11-0.175.1
 pkg -R sysroot install --accept developer/base-developer-utilities@0.5.11-0.175.1 developer/gnu-binutils@2.21.1-0.175.1 developer/macro/cpp@0.5.11-0.175.1 system/linker@0.5.11-0.175.1 developer/base-developer-utilities@0.5.11-0.175.1 developer/gnu-binutils@2.21.1-0.175.1
-pkg -R sysroot install --accept print/cups@1.4.5-0.175.1 system/library/freetype-2@2.4.9-0.175.1 library/z
-lib@1.2.3-0.175.1 x11/header@0.5.11 x11/library/libxtst@1.2.1-0.175.1 x11/library/libxi@1.6.1-0.175.1 system/library/fontconfig@2.8.0-0.175.1 system/picl@0.5.11-0.175.1
+pkg -R sysroot install --accept print/cups@1.4.5-0.175.1 system/library/freetype-2@2.4.9-0.175.1 library/zlib@1.2.3-0.175.1 x11/header@0.5.11 x11/library/libxtst@1.2.1-0.175.1 x11/library/libxi@1.6.1-0.175.1 system/library/fontconfig@2.8.0-0.175.1 system/picl@0.5.11-0.175.1
 ```
 
 OpenJDK 11 has scripts for these in `make/devkit` in it's source tree, but they don't work at all due to _completely_ incorrect version identifiers...
