@@ -1,5 +1,5 @@
 ---
-title: "Building OpenJDK 11 on Solaris 11 Sparc"
+title: "Building OpenJDK 11 on Solaris 11.4 Sparc"
 layout: post
 ---
 
