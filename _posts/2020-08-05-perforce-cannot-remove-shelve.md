@@ -1,6 +1,7 @@
 ---
 title: "Perforce cannot remove shelved changelist: 'needs tofile'"
 layout: "post"
+tags: perforce p4
 ---
 
 After recently upgrading to 2020.1, we began encountering users that have somehow created broken shelved changelists.
