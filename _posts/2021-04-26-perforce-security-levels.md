@@ -19,7 +19,7 @@ Here's a checklist of things that can help lock this down:
 - Disable anonymous user listing to help prevent passwordless users from being identified: `p4 configure set run.users.authorize=1`
   - Not really a solution to the problem, but can help by obscuring the list of users in P4.
 - If you are using LDAP, change the default AuthMethod to LDAP: `p4 configure set auth.default.method=ldap`
-  - Can break existing local accounts if you are running a mix of account authmethods.
+  - Rather than changing the default authmethod for accounts that don't have it set, this pre-populates user forms with AuthMethod: ldap.
   - Doesn't stop someone from changing their own AuthMethod.
 - If again you are using LDAP, add a 'form-save user' trigger that will check the formfile for `AuthMethod: ldap`
   - Completely prevents users from changing their AuthMethod.
