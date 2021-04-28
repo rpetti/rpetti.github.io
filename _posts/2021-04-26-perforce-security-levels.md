@@ -30,5 +30,7 @@ Here's a checklist of things that can help lock this down:
   - Not a solution if you are running mixed account types, since you'd want folks to be able to change their own password.
 - Change your user creation process to always have a random password set on creation
   - Unreliable since it depends on humans to do the right thing.
+- Add a `pre-user-passwd` trigger that checks whether there is a password before allowing it to be set. You can check if a password is set using the `p4 -ztag -F %Password% users $user` command.
+  - This also blocks admins from setting passwords unless your triggers script logic allows it in some way.
 
 Overall, I'm incredibly disappointed by Perforce's behavior when it comes to it's security levels. A very simply mistake (creating an account with the wrong authmethod) can result in compromised accounts extremely easily. The behavior should match the spirit of the documentation, which is that passwordless accounts should not be allowed in security level 1 or above.
