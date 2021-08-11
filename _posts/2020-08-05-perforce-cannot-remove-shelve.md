@@ -27,7 +27,7 @@ zgrep 29074337 checkpoint.gz | tee 29074337.jnl
   - delete any lines that aren't for the db.change, db.changex, or db.workingx tables
   - modify the db.changex and db.change rows to be a replace value operation `@rv@` instead of `@pv@`
   - modify the 8th column of the db.changex and db.change rows to be `0` instead of `2`
-  - modify the db.workingx rows to by a delete value operation `@dv@` instead of `@pv@`
+  - modify the db.workingx rows to be a delete value operation `@dv@` instead of `@pv@`
   - review the rows to ensure they aren't making changes to unintended changelists
 
 Here's the schema documentation if you want a better understanding of the fields being modified: [https://www.perforce.com/perforce/doc.current/schema/](https://www.perforce.com/perforce/doc.current/schema/)
