@@ -21,7 +21,7 @@
       padding-top: 50px;
       padding-bottom: 50px;
       hyphens: auto;
-      word-wrap: break-word;
+      overflow-wrap: break-word;
       text-rendering: optimizeLegibility;
       font-kerning: normal;
     }
@@ -92,6 +92,7 @@
     pre code {
       padding: 0;
       overflow: visible;
+      overflow-wrap: normal;
     }
     .sourceCode {
      background-color: transparent;
@@ -144,9 +145,6 @@
     ul.task-list{list-style: none;}
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
   <style type="text/css">
   /*
    * Copyright 2013 Christophe-Marie Duquesne <chmd@chmd.fr>
@@ -245,118 +243,209 @@
       width: 100%;
   }
   </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <h1 id="rob-petti">Rob Petti</h1>
 <hr />
 <blockquote>
-<p>A self motivated and committed Build/DevOps Developer with excellent creative problem-solving abilities. A continuous learner with effective communication skills. Honest, dedicated, and reliable with strong work ethic.</p>
+<p>A self motivated and committed Build/DevOps Developer with excellent
+creative problem-solving abilities. A continuous learner with effective
+communication skills. Honest, dedicated, and reliable with strong work
+ethic.</p>
 </blockquote>
 <hr />
 <h2 id="education">Education</h2>
 <dl>
 <dt>2003-2007</dt>
-<dd><strong>Bachelor of Science in Computer Engineering</strong>; University of Alberta
+<dd>
+<strong>Bachelor of Science in Computer Engineering</strong>; University
+of Alberta
 </dd>
 </dl>
 <h2 id="experience">Experience</h2>
-<p><strong>Principal Build Engineer at OpenText</strong>; July 2016 - Present</p>
-<p>Migrating, maintaining and improving automated build infrastructure and software systems for assisting with rapid application development and release.</p>
+<p><strong>Principal Build Engineer at OpenText</strong>; July 2016 -
+Present</p>
+<p>Migrating, maintaining and improving automated build infrastructure
+and software systems for assisting with rapid application development
+and release.</p>
 <ul>
 <li>Primary Tasks
 <ul>
-<li><p>Built and maintained automated systems for source code compilation and continuous integration using Jenkins, TeamCity, and GitLab CI/CD.</p></li>
-<li><p>Administrated Perforce, GitLab, Subersion, and Mercurial source control repositories, including merging repos, importing code, high-availability setup, backups, and automated permission management.</p></li>
-<li><p>Configured and administrated development tools, such as ReviewBoard, Black Duck, SonarQube, Artifactory and Fortify.</p></li>
+<li><p>Built and maintained automated systems for source code
+compilation and continuous integration using Jenkins, TeamCity, and
+GitLab CI/CD.</p></li>
+<li><p>Administrated Perforce, GitLab, Subersion, and Mercurial source
+control repositories, including merging repos, importing code,
+high-availability setup, backups, and automated permission
+management.</p></li>
+<li><p>Configured and administrated development tools, such as
+ReviewBoard, Black Duck, SonarQube, Artifactory and Fortify.</p></li>
 </ul></li>
 <li>Notable Accomplishments
 <ul>
-<li><p>Set up Perforce replication through an ad-hoc secure tunnel between sites on different networks for the purposes of facilitating a smooth migration.</p></li>
-<li><p>Assisted developers with migration of source code and build infrastructure in order to continue business uninterrupted through major transitions.</p></li>
-<li><p>Helped design and implement centralized RBAC-style access controls across disparate source control systems.</p></li>
+<li><p>Set up Perforce replication through an ad-hoc secure tunnel
+between sites on different networks for the purposes of facilitating a
+smooth migration.</p></li>
+<li><p>Assisted developers with migration of source code and build
+infrastructure in order to continue business uninterrupted through major
+transitions.</p></li>
+<li><p>Helped design and implement centralized RBAC-style access
+controls across disparate source control systems.</p></li>
 <li><p>Helped design CI/CD tooling for secure build automation.</p></li>
-<li><p>Created tool for bulk scanning source code repositories for exposed secrets.</p></li>
+<li><p>Created tool for bulk scanning source code repositories for
+exposed secrets.</p></li>
 </ul></li>
 </ul>
-<p><strong>Software Release Engineer at HP</strong>; April 2008 - Jun 2016</p>
-<p>Developing and maintaining automated build infrastructure and software systems for assisting with rapid application development and release.</p>
+<p><strong>Software Release Engineer at HP</strong>; April 2008 - Jun
+2016</p>
+<p>Developing and maintaining automated build infrastructure and
+software systems for assisting with rapid application development and
+release.</p>
 <ul>
 <li><p>Primary Tasks</p>
 <ul>
-<li><p>Built and maintained automated systems for source code compilation and continuous integration.</p></li>
-<li><p>Assisted developers in solving code, build and runtime related issues.</p></li>
-<li><p>Created and maintained installers and set-up scripts for products using InstallShield and InstallAnywhere.</p></li>
-<li><p>Developed and maintained custom applications for automation using Java, Perl, and Python.</p></li>
-<li><p>Administrated source control repositories such as Perforce and ClearCase, including merging, importing and backups.</p></li>
-<li><p>Integrated source code analysis utilities into automated build infrastructure.</p></li>
+<li><p>Built and maintained automated systems for source code
+compilation and continuous integration.</p></li>
+<li><p>Assisted developers in solving code, build and runtime related
+issues.</p></li>
+<li><p>Created and maintained installers and set-up scripts for products
+using InstallShield and InstallAnywhere.</p></li>
+<li><p>Developed and maintained custom applications for automation using
+Java, Perl, and Python.</p></li>
+<li><p>Administrated source control repositories such as Perforce and
+ClearCase, including merging, importing and backups.</p></li>
+<li><p>Integrated source code analysis utilities into automated build
+infrastructure.</p></li>
 </ul></li>
 <li><p>Notable Accomplishments</p>
 <ul>
-<li><p>Helped coordinate data center relocation with minimal SCM downtime.</p></li>
-<li><p>Designed and implemented (near) high-avilability Perforce SCM deployment.</p></li>
-<li><p>Helped implement company-wide code security scanning and certificate signing.</p></li>
-<li><p>Migrated entire product codebases and history to another site with virtually no downtime.</p></li>
+<li><p>Helped coordinate data center relocation with minimal SCM
+downtime.</p></li>
+<li><p>Designed and implemented (near) high-avilability Perforce SCM
+deployment.</p></li>
+<li><p>Helped implement company-wide code security scanning and
+certificate signing.</p></li>
+<li><p>Migrated entire product codebases and history to another site
+with virtually no downtime.</p></li>
 </ul></li>
 </ul>
-<p><strong>iSeries Systems Analyst at Shell Canada Limited</strong>; May - September 2006</p>
+<p><strong>iSeries Systems Analyst at Shell Canada Limited</strong>; May
+- September 2006</p>
 <ul>
 <li><p>Primary Tasks</p>
 <ul>
-<li><p>Worked on project to migrate to new output management software technologies.</p></li>
+<li><p>Worked on project to migrate to new output management software
+technologies.</p></li>
 <li><p>Responsible for a major data migration project.</p></li>
 <li><p>Troubleshooted report generation issues.</p></li>
 </ul></li>
 <li><p>Notable Accomplishements</p>
 <ul>
-<li>Discovered and helped patch security hole in internal web interface.</li>
+<li>Discovered and helped patch security hole in internal web
+interface.</li>
 </ul></li>
 </ul>
 <h2 id="technical-experience">Technical Experience</h2>
 <dl>
 <dt>Infrastructure</dt>
-<dd><strong>Docker:</strong> Experience with creating and deploying Docker images and containers for rapid prototyping of systems and configurations, and Docker Swarm for deployment of services and development tools.
+<dd>
+<strong>Docker:</strong> Experience with creating and deploying Docker
+images and containers for rapid prototyping of systems and
+configurations, and Docker Swarm for deployment of services and
+development tools.
 </dd>
-<dd><p><strong>Linux, Solaris, AIX, and HPUX:</strong> Expertise with setup, maintenance, and use of a variety of Unix distributions.</p>
+<dd>
+<p><strong>Linux, Solaris, AIX, and HPUX:</strong> Expertise with setup,
+maintenance, and use of a variety of Unix distributions.</p>
 </dd>
-<dd><p><strong>Virtualization:</strong> Experience with the deployment and use of ESXi, and the usage of vCloud, vSphere, VirtualBox, EC2, and Hercules.</p>
+<dd>
+<p><strong>Virtualization:</strong> Experience with the deployment and
+use of ESXi, and the usage of vCloud, vSphere, VirtualBox, EC2, and
+Hercules.</p>
 </dd>
-<dd><p><strong>Ansible:</strong> Makes use of Ansible for build system configuration management, and managing personal AWS instances.</p>
+<dd>
+<p><strong>Ansible:</strong> Makes use of Ansible for build system
+configuration management, and managing personal AWS instances.</p>
 </dd>
-<dd><p><strong>AWS:</strong> Working knowledge of Amazon Web Services, primarily Route53, EC2, and S3.</p>
+<dd>
+<p><strong>AWS:</strong> Working knowledge of Amazon Web Services,
+primarily Route53, EC2, and S3.</p>
 </dd>
 <dt>Programming Languages</dt>
-<dd><strong>Python, Perl, and Bash:</strong> Makes extensive use of interpreted scripting languages both in day-to-day work and automating tasks.
+<dd>
+<strong>Python, Perl, and Bash:</strong> Makes extensive use of
+interpreted scripting languages both in day-to-day work and automating
+tasks.
 </dd>
-<dd><p><strong>Golang:</strong> Makes frequent use of golang for developing APIs, services, and tools.</p>
+<dd>
+<p><strong>Golang:</strong> Makes frequent use of golang for developing
+APIs, services, and tools.</p>
 </dd>
-<dd><p><strong>Java and Groovy:</strong> Wrote and maintained Java code for many years as part of Jenkins plugin development, InstallAnywhwere plugins, and custom Ant tasks.</p>
+<dd>
+<p><strong>Java and Groovy:</strong> Wrote and maintained Java code for
+many years as part of Jenkins plugin development, InstallAnywhwere
+plugins, and custom Ant tasks.</p>
 </dd>
-<dd><p><strong>Ant, Make, Gradle:</strong> Writes and maintains build scripts using a variety of languages.</p>
+<dd>
+<p><strong>Ant, Make, Gradle:</strong> Writes and maintains build
+scripts using a variety of languages.</p>
 </dd>
-<dd><p>Working knowledge of <strong>C/C++</strong>, <strong>C#</strong>, <strong>Javascript/NodeJS</strong>, and some <strong>Ruby</strong>.</p>
+<dd>
+<p>Working knowledge of <strong>C/C++</strong>, <strong>C#</strong>,
+<strong>Javascript/NodeJS</strong>, and some <strong>Ruby</strong>.</p>
 </dd>
-<dd><p>Able to quickly learn most imperative languages.</p>
+<dd>
+<p>Able to quickly learn most imperative languages.</p>
 </dd>
 <dt>Source Control Systems</dt>
-<dd><strong>Perforce:</strong> Expertise with deployment, maintenance and use of Perforce.
+<dd>
+<strong>Perforce:</strong> Expertise with deployment, maintenance and
+use of Perforce.
 </dd>
-<dd><p><strong>Git:</strong> Extensive experience with the use of Git, as well as configuring and operating Git servers, such as Gitolite, Gogs, and GitLab.</p>
+<dd>
+<p><strong>Git:</strong> Extensive experience with the use of Git, as
+well as configuring and operating Git servers, such as Gitolite, Gogs,
+and GitLab.</p>
 </dd>
-<dd><p><strong>Subversion:</strong> Experience with the use of SVN, as well as maintenance and administration of httpd-driven Subversion servers.</p>
+<dd>
+<p><strong>Subversion:</strong> Experience with the use of SVN, as well
+as maintenance and administration of httpd-driven Subversion
+servers.</p>
 </dd>
-<dd><p><strong>Mercurial:</strong> Experience with the use of HG, as well as mainentance and administration of Mercurial servers.</p>
+<dd>
+<p><strong>Mercurial:</strong> Experience with the use of HG, as well as
+mainentance and administration of Mercurial servers.</p>
 </dd>
 <dt>Continuous Integration</dt>
-<dd><strong>Jenkins:</strong> Expertise with the deployment and configuration of Jenkins for continuous builds.
+<dd>
+<strong>Jenkins:</strong> Expertise with the deployment and
+configuration of Jenkins for continuous builds.
 </dd>
-<dd><p><strong>TeamCity:</strong> Experience with configuration and use of TeamCity.</p>
+<dd>
+<p><strong>TeamCity:</strong> Experience with configuration and use of
+TeamCity.</p>
 </dd>
-<dd><p><strong>GitLab CI/CD:</strong> Expertise with creation and maintenance of CI/CD pipelines, and configuration of various runner types.</p>
+<dd>
+<p><strong>GitLab CI/CD:</strong> Expertise with creation and
+maintenance of CI/CD pipelines, and configuration of various runner
+types.</p>
 </dd>
 <dt>Open Source</dt>
-<dd><strong>Jenkins:</strong> Developed and maintained several useful and some niche plugins, including the (now deprecated) <a href="http://github.com/jenkinsci/perforce-plugin">perforce-plugin</a>.
+<dd>
+<strong>Jenkins:</strong> Developed and maintained several useful and
+some niche plugins, including the (now deprecated) <a
+href="http://github.com/jenkinsci/perforce-plugin">perforce-plugin</a>.
 </dd>
-<dd><p><strong>Black Duck Prometheus Exporter:</strong> Developed a basic <a href="http://github.com/rpetti/blackduck_exporter">Prometheus exporter</a> in Go for gathering operational statistics from Black Duck Hub. Also shipped as a <a href="https://hub.docker.com/r/rpetti/blackduck_exporter/">docker image</a>.</p>
+<dd>
+<p><strong>Black Duck Prometheus Exporter:</strong> Developed a basic <a
+href="http://github.com/rpetti/blackduck_exporter">Prometheus
+exporter</a> in Go for gathering operational statistics from Black Duck
+Hub. Also shipped as a <a
+href="https://hub.docker.com/r/rpetti/blackduck_exporter/">docker
+image</a>.</p>
 </dd>
 </dl>
 <h2 id="hobbies">Hobbies</h2>
@@ -368,7 +457,8 @@
 </ul>
 <hr />
 <blockquote>
-<p><a href="mailto:rob.petti@gmail.com" class="email">rob.petti@gmail.com</a> Calgary, AB, Canada</p>
+<p><a href="mailto:rob.petti@gmail.com"
+class="email">rob.petti@gmail.com</a> Calgary, AB, Canada</p>
 </blockquote>
 </body>
 </html>
