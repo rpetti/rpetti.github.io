@@ -4,10 +4,10 @@ title: About
 permalink: /about/
 ---
 
-Automation fanatic, linux evangelist, avid gamer, and legacy code archaeologist.
+I'm Rob! I’m a Software DevOps Engineer living in Calgary. I have a passion for automation, and a keen interest in most computing technologies. I'm also into gaming, both video gaming and tabletop roleplaying.
 
 [Resume](/resume.html)
 
 ### Contact me
 
-[rob.petti@gmail.com](mailto:rob.petti@gmail.com)
+[rob@robpetti.com](mailto:rob@robpetti.com)
