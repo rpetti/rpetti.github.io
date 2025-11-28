@@ -28,4 +28,4 @@ server:
       maxNpmAuditVulnerabilitiesAllowed: 200
 ```
 
-Then restart xray, and try to trigger the db migration from the UI again. Note that it will destroy these "custom" vulnerabilities/components, though you likely have never created any such thing to begin.
+Then restart xray, and try to trigger the db migration from the UI again. Note that it will destroy these "custom" vulnerabilities/components, though you likely have never created any such thing to begin with.
